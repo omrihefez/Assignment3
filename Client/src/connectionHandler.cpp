@@ -1,5 +1,9 @@
 #include <connectionHandler.h>
- 
+#include <Message.h>
+#include <AckMessage.h>
+#include <FollowAckMessage.h>
+#include "StatAckMessage.h"
+
 using boost::asio::ip::tcp;
 
 using std::cin;
@@ -12,6 +16,17 @@ ConnectionHandler::ConnectionHandler(string host, short port): host_(host), port
     
 ConnectionHandler::~ConnectionHandler() {
     close();
+}
+
+short bytesToShort(char* bytesArr){
+    short result = (short)((bytesArr[0] & 0xff) << 8);
+    result += (short)(bytesArr[1] & 0xff);
+    return result;
+}
+
+void shortToBytes(short num, char* bytesArr){
+    bytesArr[0] = ((num >> 8) & 0xFF);
+    bytesArr[1] = (num & 0xFF);
 }
  
 bool ConnectionHandler::connect() {
@@ -62,6 +77,15 @@ bool ConnectionHandler::sendBytes(const char bytes[], int bytesToWrite) {
     }
     return true;
 }
+
+short ConnectionHandler::getShort(){
+    short output = -1;
+    char bytes[2] = {};
+    if (ConnectionHandler::getBytes(bytes, 2)){
+        output = ConnectionHandler::bytesToShort(bytes);
+    }
+    return output;
+}
  
 bool ConnectionHandler::getLine(std::string& line) {
     return getFrameAscii(line, '\n');
@@ -100,4 +124,80 @@ void ConnectionHandler::close() {
     } catch (...) {
         std::cout << "closing failed: connection already closed" << std::endl;
     }
+}
+
+Message ConnectionHandler::getMessage(short opcode) {
+    Message output;
+    switch (opcode) {
+        case 9: {
+            short messageOpcode = getShort();
+            switch (messageOpcode) {
+                case 1 : {
+                    output = AckMessage(1);
+                    break;
+                }
+                case 2: {
+                    output = AckMessage(2);
+                    break;
+                }
+                case 3: {
+                    output = AckMessage(3);
+                    break;
+                }
+                case 4: {
+                    std::string username = ConnectionHandler::getString();
+                    output = FollowAckMessage(4, username);
+                    break;
+                }
+                case 5: {
+                    output = AckMessage(5);
+                    break;
+                }
+                case 6: {
+                    output = AckMessage(6);
+                    break;
+                }
+                case 7: {
+                    short age = getShort();
+                    short numOfPosts = getShort();
+                    short numOfFollowers = getShort();
+                    short numOfFollowing = getShort();
+                    output = StatAckMessage(7, age, numOfPosts, numOfFollowers, numOfFollowing);
+                    break;
+                }
+                case 8: {
+                    short age = getShort();
+                    short numOfPosts = getShort();
+                    short numOfFollowers = getShort();
+                    short numOfFollowing = getShort();
+                    output = StatAckMessage(8, age, numOfPosts, numOfFollowers, numOfFollowing);
+                    break;
+                }
+            }
+            break;
+        }
+        case 10: {
+            short messageOpcode = getShort();
+
+            break;
+        }
+
+        case 11:{
+
+            break;
+        }
+
+        case 12:{
+
+            break;
+        }
+    }
+    return output;
+}
+
+std::string ConnectionHandler::getString() {
+    string output = "";
+    output = getFrameAscii(output, '\0');
+    return output;
+
 }

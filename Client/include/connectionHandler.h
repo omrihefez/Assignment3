@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <boost/asio.hpp>
+#include "Message.h"
 
 using boost::asio::ip::tcp;
 
@@ -17,6 +18,10 @@ private:
 public:
     ConnectionHandler(std::string host, short port);
     virtual ~ConnectionHandler();
+
+    short bytesToShort(char* bytesArr);
+
+    void shortToBytes(short num, char* bytesArr);
  
     // Connect to the remote machine
     bool connect();
@@ -28,6 +33,12 @@ public:
 	// Send a fixed number of bytes from the client - blocking.
     // Returns false in case the connection is closed before all the data is sent.
     bool sendBytes(const char bytes[], int bytesToWrite);
+
+    short getShort();
+
+    Message getMessage(short opcode);
+
+    std::string getString();
 	
     // Read an ascii line from the server
     // Returns false in case connection closed before a newline can be read.
