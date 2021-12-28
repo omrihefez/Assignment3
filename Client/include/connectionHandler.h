@@ -36,7 +36,9 @@ public:
 
     short getShort();
 
-    Message getMessage(short opcode);
+    Message* getMessage(short opcode);
+
+    std::string static stringToTemplate(std::string);
 
     std::string getString();
 	

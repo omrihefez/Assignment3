@@ -2,6 +2,9 @@
 #include <Message.h>
 #include <AckMessage.h>
 #include <FollowAckMessage.h>
+#include <Notification.h>
+#include <Error.h>
+#include <Block.h>
 #include "StatAckMessage.h"
 
 using boost::asio::ip::tcp;
@@ -126,35 +129,44 @@ void ConnectionHandler::close() {
     }
 }
 
-Message ConnectionHandler::getMessage(short opcode) {
-    Message output;
+Message* ConnectionHandler::getMessage(short opcode) {
+    Message* output;
     switch (opcode) {
         case 9: {
+            char ch;
+            getBytes(&ch, 1);
+            Type type = ch == '0' ? PM : Public;
+            std::string postingUser = getString();
+            std::string content = getString();
+            output = new Notification(type,postingUser,content);
+            break;
+        }
+        case 10: {
             short messageOpcode = getShort();
             switch (messageOpcode) {
                 case 1 : {
-                    output = AckMessage(1);
+                    output = new AckMessage(1);
                     break;
                 }
                 case 2: {
-                    output = AckMessage(2);
+                    output = new AckMessage(2);
                     break;
                 }
                 case 3: {
-                    output = AckMessage(3);
+                    output = new AckMessage(3);
                     break;
                 }
                 case 4: {
                     std::string username = ConnectionHandler::getString();
-                    output = FollowAckMessage(4, username);
+                    output = new FollowAckMessage(4, username);
                     break;
                 }
                 case 5: {
-                    output = AckMessage(5);
+                    output = new AckMessage(5);
                     break;
                 }
                 case 6: {
-                    output = AckMessage(6);
+                    output = new AckMessage(6);
                     break;
                 }
                 case 7: {
@@ -162,7 +174,7 @@ Message ConnectionHandler::getMessage(short opcode) {
                     short numOfPosts = getShort();
                     short numOfFollowers = getShort();
                     short numOfFollowing = getShort();
-                    output = StatAckMessage(7, age, numOfPosts, numOfFollowers, numOfFollowing);
+                    output = new StatAckMessage(7, age, numOfPosts, numOfFollowers, numOfFollowing);
                     break;
                 }
                 case 8: {
@@ -170,25 +182,20 @@ Message ConnectionHandler::getMessage(short opcode) {
                     short numOfPosts = getShort();
                     short numOfFollowers = getShort();
                     short numOfFollowing = getShort();
-                    output = StatAckMessage(8, age, numOfPosts, numOfFollowers, numOfFollowing);
+                    output = new StatAckMessage(8, age, numOfPosts, numOfFollowers, numOfFollowing);
                     break;
                 }
             }
             break;
         }
-        case 10: {
+        case 11: {
             short messageOpcode = getShort();
-
+            output = new Error(messageOpcode);
             break;
         }
-
-        case 11:{
-
-            break;
-        }
-
         case 12:{
-
+            std::string username = getString();
+            output = new Block(username);
             break;
         }
     }
@@ -200,4 +207,8 @@ std::string ConnectionHandler::getString() {
     output = getFrameAscii(output, '\0');
     return output;
 
+}
+
+std::string static ConnectionHandler::stringToTemplate(std::string) {
+    return std::string();
 }
