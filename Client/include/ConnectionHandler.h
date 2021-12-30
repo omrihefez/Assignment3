@@ -34,13 +34,6 @@ public:
     // Returns false in case the connection is closed before all the data is sent.
     bool sendBytes(const char bytes[], int bytesToWrite);
 
-    short getShort();
-
-    Message* getMessage(short opcode);
-
-    std::string static stringToTemplate(std::string);
-
-    std::string getString();
 	
     // Read an ascii line from the server
     // Returns false in case connection closed before a newline can be read.
@@ -60,6 +53,12 @@ public:
 	
     // Close down the connection properly.
     void close();
+
+    short getShort();
+
+    Message* getMessage(short opcode);
+
+    std::string getString();
  
 }; //class ConnectionHandler
  

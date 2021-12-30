@@ -19,3 +19,8 @@ std::string Notification::getPostingUser() {
 std::string Notification::getContent() {
     return content;
 }
+
+std::string Notification::toString() {
+    std::string typeString = type == PM ? "PM" : "Public";
+    return "Notification " + typeString + " " + getPostingUser() + " " + getContent();
+}

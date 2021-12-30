@@ -16,6 +16,7 @@ private:
 public:
     Block(std::string _username);
     std::string getUsername();
+    std::string toString();
 
 };
 

@@ -22,6 +22,7 @@ public:
     Type getType();
     std::string getPostingUser();
     std::string getContent();
+    std::string toString();
 };
 
 

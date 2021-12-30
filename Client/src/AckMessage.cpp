@@ -9,3 +9,7 @@ AckMessage::AckMessage(short _messageOpcode): messageOpcode(_messageOpcode){}
 short AckMessage::getMessageOpcode() {
     return messageOpcode;
 }
+
+std::string AckMessage::toString() {
+    return "Ack " + std::to_string(getMessageOpcode());
+}

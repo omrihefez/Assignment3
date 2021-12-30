@@ -22,6 +22,7 @@ public:
     short getNumOfPosts();
     short getNumOfFollowers();
     short getNumOfFollowing();
+    std::string toString();
 
 };
 

@@ -15,6 +15,7 @@ private:
 public:
     FollowAckMessage(short _messageOpcode,std::string _username);
     std::string getUsername();
+    std::string toString();
 
 
 };

@@ -1,4 +1,4 @@
-#include <connectionHandler.h>
+#include <ConnectionHandler.h>
 #include <Message.h>
 #include <AckMessage.h>
 #include <FollowAckMessage.h>
@@ -21,13 +21,13 @@ ConnectionHandler::~ConnectionHandler() {
     close();
 }
 
-short bytesToShort(char* bytesArr){
+short ConnectionHandler::bytesToShort(char* bytesArr){
     short result = (short)((bytesArr[0] & 0xff) << 8);
     result += (short)(bytesArr[1] & 0xff);
     return result;
 }
 
-void shortToBytes(short num, char* bytesArr){
+void ConnectionHandler::shortToBytes(short num, char* bytesArr){
     bytesArr[0] = ((num >> 8) & 0xFF);
     bytesArr[1] = (num & 0xFF);
 }
@@ -91,11 +91,11 @@ short ConnectionHandler::getShort(){
 }
  
 bool ConnectionHandler::getLine(std::string& line) {
-    return getFrameAscii(line, '\n');
+    return getFrameAscii(line, ';');
 }
 
 bool ConnectionHandler::sendLine(std::string& line) {
-    return sendFrameAscii(line, '\n');
+    return sendFrameAscii(line, ';');
 }
  
 bool ConnectionHandler::getFrameAscii(std::string& frame, char delimiter) {
@@ -203,12 +203,8 @@ Message* ConnectionHandler::getMessage(short opcode) {
 }
 
 std::string ConnectionHandler::getString() {
-    string output = "";
+    std::string output = "";
     output = getFrameAscii(output, '\0');
     return output;
 
-}
-
-std::string static ConnectionHandler::stringToTemplate(std::string) {
-    return std::string();
 }

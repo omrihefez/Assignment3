@@ -6,6 +6,7 @@
 #define IDEAPROJECTS_ACKMESSAGE_H
 
 
+#include <string>
 #include "Message.h"
 
 class AckMessage : public Message{
@@ -16,6 +17,7 @@ private:
 public:
     AckMessage(short _messageOpcode);
     short getMessageOpcode();
+    virtual std::string toString();
 
 
 };

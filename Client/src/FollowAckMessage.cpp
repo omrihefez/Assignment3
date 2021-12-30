@@ -9,3 +9,7 @@ FollowAckMessage::FollowAckMessage(short _messageOpcode, std::string _username):
 std::string FollowAckMessage::getUsername() {
     return username;
 }
+
+std::string FollowAckMessage::toString() {
+    return "Ack " + std::to_string(getMessageOpcode()) + " " + username;
+}

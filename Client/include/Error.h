@@ -14,6 +14,7 @@ private:
 public:
     Error(short _messageOpcode);
     short getMessageOpcode();
+    std::string toString();
 
 };
 

@@ -6,7 +6,13 @@
 #define IDEAPROJECTS_MESSAGE_H
 
 
+#include <string>
+
 class Message  {
+
+public:
+    virtual std::string toString() = 0;
+    virtual ~Message();
 
 };
 
