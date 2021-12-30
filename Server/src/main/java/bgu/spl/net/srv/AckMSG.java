@@ -9,5 +9,4 @@ public class AckMSG extends MSG {
         opcode = _opcode;
         messageOpcode = _messageOpcode;
     }
-
 }

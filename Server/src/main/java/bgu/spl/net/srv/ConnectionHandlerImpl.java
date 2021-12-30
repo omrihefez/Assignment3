@@ -12,27 +12,30 @@ import java.net.Socket;
 public class ConnectionHandlerImpl<T> implements ConnectionHandler {
 
     private final BidiMessagingProtocol<T> protocol;
-    private final MessageEncoderDecoder<T> encdec;
+    private final EncoderDecoder encdec;
     private Socket sock;
 
-    public ConnectionHandlerImpl (Socket _sock, MessageEncoderDecoder<T> _reader,
+    public ConnectionHandlerImpl (Socket _sock, EncoderDecoder _reader,
                                   BidiMessagingProtocol<T> _protocol) {
         sock = _sock;
         encdec = _reader;
         protocol = _protocol;
     }
-    public short bytesToShort(byte[] byteArr) {
-        short result = (short)((byteArr[0] & 0xff) << 8);
-        result += (short)(byteArr[1] & 0xff);
-        return result;
-    }
+
 
     public void run(){
         try (Socket sock = sock;
              BufferedInputStream in = new BufferedInputStream(sock.getInputStream());
              BufferedOutputStream out = new BufferedOutputStream(sock.getOutputStream())) {
             int read;
-            if (!protocol.shouldTerminate() && (read = in.read()) >= 0) {
+            while (!protocol.shouldTerminate() && (read = in.read()) >= 0) {
+                String nextMessage = null;
+                while (nextMessage == null) {
+                    nextMessage = (String)encdec.decodeNextByte((byte) read));
+                }
+            }
+
+            while (!protocol.shouldTerminate() && (read = in.read()) >= 0) {
                 T opCode0 = encdec.decodeNextByte((byte) read);
                 T opCode1 = encdec.decodeNextByte((byte) read);
                 short nextMessage = 0;

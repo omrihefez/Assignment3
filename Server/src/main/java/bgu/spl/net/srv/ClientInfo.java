@@ -5,7 +5,6 @@ import java.time.Period;
 
 public class ClientInfo {
 
-    private int id ;
     private String username;
     private String password;
     private String birthday;
