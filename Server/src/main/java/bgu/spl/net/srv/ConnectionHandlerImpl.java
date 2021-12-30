@@ -42,7 +42,6 @@ public class ConnectionHandlerImpl<T> implements ConnectionHandler {
                     opCode[1] = (byte)opCode1;
                     nextMessage = bytesToShort(opCode);
                 }
-
                 switch (nextMessage){
                     case 1 : {
                         String username = "";

@@ -7,7 +7,9 @@ import java.util.HashMap;
 
 public class ConnectionsImpl <T> implements Connections<T> {
 
+    private int clientID = 0;
     private HashMap<Integer, ConnectionHandler<T>> connectionsMap = new HashMap<>();
+    private HashMap<Integer, ClientInfo> idClientMap = new HashMap<>();
     private static ConnectionsImpl instance = null;
     private static boolean isDone = false;
 
@@ -43,4 +45,11 @@ public class ConnectionsImpl <T> implements Connections<T> {
     public void disconnect(int connectionId){
         connectionsMap.remove(connectionId);
     }
+
+    public void addClient(ClientInfo client) {
+        idClientMap.put(clientID, client);
+        connectionsMap.put(clientID, new ConnectionHandlerImpl());//need to add parameters to constructor
+        clientID++;
+    }
+
 }

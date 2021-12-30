@@ -10,10 +10,6 @@ public class BlockMSG extends MSG{
         username = _username;
     }
 
-    public int getOpcode() {
-        return opcode;
-    }
-
     public String getUsername() {
         return username;
     }

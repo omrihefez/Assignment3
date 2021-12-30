@@ -13,4 +13,8 @@ public class TcpServer extends BaseServer {
         new Thread(handler).start();
     }
 
+    public static void main (String[] args){
+        new BaseServer(port, () -> new protocolImpl(), () -> new EncoderDecoder()).serve();
+    }
+
 }

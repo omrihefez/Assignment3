@@ -13,4 +13,16 @@ public class LoginMSG extends MSG{
         password = _password;
         captcha = _captcha;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public short getCaptcha() {
+        return captcha;
+    }
 }
