@@ -1,0 +1,12 @@
+package bgu.spl.net.srv;
+
+public class ErrorMSG extends MSG{
+
+    private int opcode;
+    private int messageOpcode;
+
+    public ErrorMSG(int _opcode,int _messageOpcode){
+        opcode = _opcode;
+        messageOpcode = _messageOpcode;
+    }
+}
