@@ -12,6 +12,7 @@ public class ClientInfo {
     private int numOfPosts;
     private int numOfFollowers;
     private int numOfFollowing;
+    private boolean isLoggedIn;
 
     public ClientInfo(String _username, String _password, String _birthday){
         username = _username;
@@ -21,6 +22,7 @@ public class ClientInfo {
         numOfPosts = 0;
         numOfFollowers = 0;
         numOfFollowing = 0;
+        isLoggedIn = false;
     }
 
     private int birthdayToAge(String birthday){
@@ -30,5 +32,21 @@ public class ClientInfo {
         LocalDate today = LocalDate.now();
         LocalDate birthDate = LocalDate.of(year,month,day);
         return Period.between(birthDate, today).getYears();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean getLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean state){
+        isLoggedIn = state;
     }
 }
