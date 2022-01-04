@@ -2,11 +2,15 @@ package bgu.spl.net.srv;
 
 public class AckMSG extends MSG {
 
-    private int opcode;
-    private int messageOpcode;
+    private short opcode;
+    private short messageOpcode;
 
-    public AckMSG(int _opcode,int _messageOpcode){
-        opcode = _opcode;
+    public AckMSG(short _opcode,short _messageOpcode){
+        super(_opcode);
         messageOpcode = _messageOpcode;
+    }
+
+    public short getMessageOpcode() {
+        return messageOpcode;
     }
 }

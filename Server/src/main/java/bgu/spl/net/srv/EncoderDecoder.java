@@ -16,6 +16,13 @@ public class EncoderDecoder implements MessageEncoderDecoder {
         return result;
     }
 
+    public byte[] shortToBytes(short num) {
+        byte[] bytesArr = new byte[2];
+        bytesArr[0] = (byte)((num >> 8) & 0xFF);
+        bytesArr[1] = (byte)(num & 0xFF);
+        return bytesArr;
+    }
+
     @Override
     public MSG decodeNextByte(byte nextByte) {
         if (nextByte == ';') {
@@ -94,7 +101,11 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                     return logstatMSG;
                 }
                 case 8: {
-                    StatMSG statMSG = new StatMSG();
+                    int i = 2;
+                    while (bytes[i] != '\0')
+                        i++;
+                    String usernames = new String(bytes, 2, i, StandardCharsets.UTF_8);
+                    StatMSG statMSG = new StatMSG(usernames);
                     return statMSG;
                 }
             }
@@ -110,6 +121,44 @@ public class EncoderDecoder implements MessageEncoderDecoder {
 
     @Override
     public byte[] encode(Object message) {
-        return new byte[0];
+        if (!(message instanceof MSG))
+            return null;
+        MSG msg = (MSG) message;
+        byte[] output = null;
+        if (msg instanceof NotificationMSG){
+            NotificationMSG notificationMSG = (NotificationMSG) msg;
+            String s = notificationMSG.getOpcode() + notificationMSG.getType() + notificationMSG.getPostingUser() + "\0" +
+                    notificationMSG.getContent() + '\0' + ";";
+            output = s.getBytes(StandardCharsets.UTF_8);
+        }
+        if (msg instanceof AckMSG){
+            AckMSG ackMSG = (AckMSG) message;
+            if (msg instanceof FollowAckMSG){
+                FollowAckMSG followAckMSG = (FollowAckMSG) ackMSG;
+                String s = followAckMSG.getOpcode() + followAckMSG.getMessageOpcode() + followAckMSG.getUsername() + '\0' + ";";
+                output = s.getBytes(StandardCharsets.UTF_8);
+            }
+            else if (msg instanceof StatAckMSG){
+                StatAckMSG statAckMSG = (StatAckMSG) ackMSG;
+                String s = statAckMSG.getOpcode() + statAckMSG.getMessageOpcode() + statAckMSG.getAge() +
+                        statAckMSG.getNumOfPosts() + statAckMSG.getNumOfFollowers() + statAckMSG.getNumOfFollowing() + ";";
+                output = s.getBytes(StandardCharsets.UTF_8);
+            }
+            else{ //regular Ack message
+                String s = ackMSG.getOpcode() + ackMSG.getMessageOpcode() + ";";
+                output = s.getBytes(StandardCharsets.UTF_8);
+            }
+        }
+        else if (msg instanceof ErrorMSG){
+            ErrorMSG errorMSG = (ErrorMSG) msg;
+            String s = errorMSG.getOpcode() + errorMSG.getMessageOpcode() + ";";
+            output = s.getBytes(StandardCharsets.UTF_8);
+        }
+        else if (msg instanceof BlockMSG){
+            BlockMSG blockMSG = (BlockMSG) msg;
+            String s = blockMSG.getOpcode() + blockMSG.getUsername() + '\0' + ";";
+            output = s.getBytes(StandardCharsets.UTF_8);
+        }
+        return output;
     }
 }
