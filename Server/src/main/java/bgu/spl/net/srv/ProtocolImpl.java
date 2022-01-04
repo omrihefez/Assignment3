@@ -164,23 +164,35 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 7));
                 else {
                     for (Object ID : connections.getLoggedUsers()) {
-                        connections.getHandler(clientID).send(new StatAckMSG((short)10,(short)7,
-                                client.getAge(),client.getNumOfPosts(),client.getNumOfFollowers(),client.getNumOfFollowing()));
+                        ClientInfo checkedClient = connections.getClientInfo((int)ID);
+                        connections.getHandler(clientID).send(new StatAckMSG((short)10,(short)7, checkedClient.getAge(),
+                                checkedClient.getNumOfPosts(),checkedClient.getNumOfFollowers(),checkedClient.getNumOfFollowing()));
                     }
                 }
             }
             case 8 : {
                 StatMSG msg = (StatMSG) message;
-                MSG response;
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn() == false ) // if not registered / not logged in
-                    response = new ErrorMSG((short) 11, (short) 8);
+                LinkedList<String> usernamesList = new LinkedList<>();
+                if (client == null || !client.getLoggedIn()) // if not registered / not logged in
+                    connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 8));
                 else {
                     String usernames = msg.getUsernames();
-                    for (int i = 0 ; i < usernames.length() ; i++){
+                    int i = 0;
+                    while (i < usernames.length()){
                         String username = "";
-                        while (usernames.charAt(i) != '|')
-                            usernames +=
+                        for (int j = i ; j < usernames.length() & usernames.charAt(j) != '|' ; j++) {
+                            username += usernames.charAt(j);
+                            i++;
+                        }
+                        usernamesList.add(username);
+                        i++;
+                    }
+                    for (String s : usernamesList){
+                        int ID = connections.getClientId(s);
+                        ClientInfo checkedClient = connections.getClientInfo(ID);
+                        connections.getHandler(clientID).send(new StatAckMSG((short)10,(short)8, checkedClient.getAge(),
+                                checkedClient.getNumOfPosts(),checkedClient.getNumOfFollowers(),checkedClient.getNumOfFollowing()));
                     }
                 }
             }
