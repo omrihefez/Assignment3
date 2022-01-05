@@ -2,11 +2,11 @@ package bgu.spl.net.srv;
 
 import bgu.spl.net.api.bidi.BidiMessagingProtocol;
 import bgu.spl.net.api.bidi.Connections;
-import bgu.spl.net.srv.ConnectionsImpl;
-import com.sun.security.ntlm.Client;
+//import bgu.spl.net.srv.ConnectionsImpl;
 
-import java.io.BufferedOutputStream;
+//import java.io.BufferedOutputStream;
 import java.util.LinkedList;
+//import java.util.Vector;
 
 public class ProtocolImpl implements BidiMessagingProtocol {
 
@@ -152,9 +152,9 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     response = new ErrorMSG((short) 11, (short) 6);
                 else {
                     if (connections.getClientInfo(recipientID).getLoggedIn())
-                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent()+ msg.getDateTime()));
+                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent(connections.getFilter())+ msg.getDateTime()));
                     else
-                        connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent() + msg.getDateTime()));
+                        connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent(connections.getFilter()) + msg.getDateTime()));
                     response = new AckMSG((short)10, (short)6);
                 }
                 connections.getHandler(clientID).send(response);

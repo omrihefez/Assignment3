@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7be9687e-5103-4f51-8e04-c9875531d018" name="Changes" comment="" />
+    <list default="true" id="7be9687e-5103-4f51-8e04-c9875531d018" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.idea/Assignment3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/.idea/Client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/PMMSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/PMMSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/PostMSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/PostMSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" afterDir="false" />
+    </list>
+    <list id="c06347db-80c2-4ce2-881c-8a0ece42dad7" name="Changes by barza" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +26,25 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java">
+      <ranges>
+        <range start1="4" end1="6" start2="4" end2="5" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+        <range start1="7" end1="8" start2="6" end2="7" changelist="c06347db-80c2-4ce2-881c-8a0ece42dad7" />
+        <range start1="9" end1="9" start2="8" end2="9" changelist="c06347db-80c2-4ce2-881c-8a0ece42dad7" />
+        <range start1="154" end1="155" start2="154" end2="155" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+        <range start1="156" end1="157" start2="156" end2="157" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java">
+      <ranges>
+        <range start1="7" end1="7" start2="7" end2="8" changelist="c06347db-80c2-4ce2-881c-8a0ece42dad7" />
+        <range start1="13" end1="13" start2="14" end2="16" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+        <range start1="16" end1="17" start2="19" end2="22" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+        <range start1="103" end1="103" start2="108" end2="112" changelist="7be9687e-5103-4f51-8e04-c9875531d018" />
+      </ranges>
+    </file>
   </component>
   <component name="ProjectId" id="230TTF11ZaqqQtbWlQ3E706nS28" />
   <component name="ProjectViewState">
@@ -23,6 +56,27 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+    <configuration name="TcpServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="bgu.spl.net.srv.TcpServer" />
+      <module name="spl-net" />
+      <option name="PROGRAM_PARAMETERS" value="3000" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="bgu.spl.net.srv.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.TcpServer" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

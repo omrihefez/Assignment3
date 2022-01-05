@@ -7,6 +7,7 @@ import bgu.spl.net.api.bidi.BidiMessagingProtocol;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 import java.util.function.Supplier;
 
 public abstract class BaseServer<T> implements Server<T> {
@@ -35,7 +36,9 @@ public abstract class BaseServer<T> implements Server<T> {
         try (ServerSocket serverSock = new ServerSocket(port)) {
 
 			System.out.println("Server started");
-            ConnectionsImpl connections = new ConnectionsImpl();
+            Vector<String> filter = new Vector<>();
+            filter.add("SPL"); filter.add("Covid"); filter.add("Trump"); filter.add("War"); filter.add("test");
+            ConnectionsImpl connections = new ConnectionsImpl(filter);
             this.sock = serverSock; //just to be able to close
 
             while (!Thread.currentThread().isInterrupted()) {
