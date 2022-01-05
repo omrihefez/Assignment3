@@ -9,12 +9,12 @@ public class TcpServer extends BaseServer {
     }
 
     @Override
-    protected void execute(BlockingConnectionHandler handler) {
+    protected void execute(ConnectionHandlerImpl handler) {
         new Thread(handler).start();
     }
 
     public static void main (String[] args){
-        new BaseServer(port, () -> new protocolImpl(), () -> new EncoderDecoder()).serve();
+        new TcpServer(Integer.valueOf(args[0]), () -> new ProtocolImpl(), () -> new EncoderDecoder()).serve();
     }
 
 }
