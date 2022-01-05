@@ -100,31 +100,28 @@ public class ProtocolImpl implements BidiMessagingProtocol {
             case 5: {
                 PostMSG msg = (PostMSG) message;
                 MSG response = null;
-                boolean error = false;
                 LinkedList<Integer> loggedViewers = new LinkedList<>();
                 LinkedList<Integer> unLoggedViewers = new LinkedList<>();
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn()) { // if not registered / logged in
+                if (client == null || client.getLoggedIn()) // if not registered / logged in
                     response = new ErrorMSG((short) 11, (short) 5);
-                    error = true;
-                }
-                String content = msg.getContent();
-                for (int i = 0; i < content.length() & !error; i++) {
-                    if (content.charAt(i) == '@') {
-                        String viewer = "";
-                        for (int j = i++; j < content.length() && content.charAt(j) != ' '; j++) {
-                            viewer += content.charAt(j);
-                        }
-                        int viewerID = connections.getClientId(viewer);
-                        if (viewerID != -1) { //viewer is registered
-                           if (connections.getClientInfo(viewerID).getLoggedIn())
-                                loggedViewers.add(viewerID);
-                            else
-                                unLoggedViewers.add(viewerID);
+                else {
+                    String content = msg.getContent();
+                    for (int i = 0; i < content.length() ; i++) {
+                        if (content.charAt(i) == '@') {
+                            String viewer = "";
+                            for (int j = i++; j < content.length() && content.charAt(j) != ' '; j++) {
+                                viewer += content.charAt(j);
+                            }
+                            int viewerID = connections.getClientId(viewer);
+                            if (viewerID != -1) { //viewer is registered
+                                if (connections.getClientInfo(viewerID).getLoggedIn())
+                                    loggedViewers.add(viewerID);
+                                else
+                                    unLoggedViewers.add(viewerID);
+                            }
                         }
                     }
-                }
-                if (!error) {
                     for (int ID : client.getFollowers()) {
                         if (connections.getClientInfo(ID).getLoggedIn())
                             loggedViewers.add(ID);
