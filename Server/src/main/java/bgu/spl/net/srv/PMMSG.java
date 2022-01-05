@@ -19,4 +19,8 @@ public class PMMSG extends MSG {
     public String getContent(){
         return content;
     }
+
+    public String getDateTime() {
+        return dateTime;
+    }
 }

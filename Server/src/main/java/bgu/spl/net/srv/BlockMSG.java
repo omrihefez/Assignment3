@@ -4,8 +4,8 @@ public class BlockMSG extends MSG{
 
     private String username;
 
-    public BlockMSG(short _opcode, String _username){
-        super(_opcode);
+    public BlockMSG(String _username){
+        super((short)12);
         username = _username;
     }
 

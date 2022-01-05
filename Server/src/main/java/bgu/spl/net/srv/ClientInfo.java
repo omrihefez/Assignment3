@@ -17,6 +17,7 @@ public class ClientInfo {
     private boolean isLoggedIn;
     private HashSet<Integer> followers;
     private HashSet<Integer> following;
+    private HashSet<Integer> blocked;
     private LinkedBlockingQueue<NotificationMSG> postsToView;
 
     public ClientInfo(String _username, String _password, String _birthday){
@@ -30,6 +31,7 @@ public class ClientInfo {
         isLoggedIn = false;
         followers = new HashSet<>();
         following = new HashSet<>();
+        blocked = new HashSet<>();
         postsToView = new LinkedBlockingQueue<>();
     }
 
@@ -54,6 +56,9 @@ public class ClientInfo {
     }
     public short getNumOfPosts(){
         return numOfPosts;
+    }
+    public boolean isBlocked(int ID){
+        return blocked.contains(ID);
     }
 
     public short getNumOfFollowers() {
@@ -83,7 +88,9 @@ public class ClientInfo {
         followers.remove(ID);
         numOfFollowers--;
     }
-
+    public void block(int ID){
+        blocked.add(ID);
+    }
     public HashSet<Integer> getFollowers() {
         return followers;
     }

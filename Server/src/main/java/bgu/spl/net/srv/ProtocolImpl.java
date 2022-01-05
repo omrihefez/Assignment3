@@ -79,6 +79,8 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 else if (msg.getFollow() == 0) { //follow
                     if (client.isFollowing(toFollowID)) //already following
                         response = new ErrorMSG((short) 11, (short) 4);
+                    else if (client.isBlocked(toFollowID)) //blocked
+                        response = new ErrorMSG((short) 11, (short) 4);
                     else {
                         client.follow(toFollowID);
                         connections.getClientInfo(toFollowID).addFollower(clientID);
@@ -100,7 +102,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 MSG response = null;
                 boolean error = false;
                 LinkedList<Integer> loggedViewers = new LinkedList<>();
-                LinkedList<Integer> unLoggedviewers = new LinkedList<>();
+                LinkedList<Integer> unLoggedViewers = new LinkedList<>();
                 ClientInfo client = connections.getClientInfo(clientID);
                 if (client == null || client.getLoggedIn() == false) { // if not registered / logged in
                     response = new ErrorMSG((short) 11, (short) 5);
@@ -120,7 +122,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                         } else if (connections.getClientInfo(viewerID).getLoggedIn() == true)
                             loggedViewers.add(viewerID);
                         else
-                            unLoggedviewers.add(viewerID);
+                            unLoggedViewers.add(viewerID);
                     }
                 }
                 if (!error) {
@@ -128,12 +130,16 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                         if (connections.getClientInfo(ID).getLoggedIn() == true)
                             loggedViewers.add(ID);
                         else
-                            unLoggedviewers.add(ID);
+                            unLoggedViewers.add(ID);
                     }
-                    for (int ID : loggedViewers)
-                        connections.getHandler(ID).send(new NotificationMSG(1, client.getUsername(), content));
-                    for (int ID : unLoggedviewers)
-                        connections.getClientInfo(ID).addPost(new NotificationMSG(1, client.getUsername(), content));
+                    for (int ID : loggedViewers) {
+                        if (!client.isBlocked(ID))
+                            connections.getHandler(ID).send(new NotificationMSG(1, client.getUsername(), content));
+                    }
+                    for (int ID : unLoggedViewers) {
+                        if (!client.isBlocked(ID))
+                            connections.getClientInfo(ID).addPost(new NotificationMSG(1, client.getUsername(), content));
+                    }
                     response = new AckMSG((short) 10, (short) 5);
                     client.increaseNumOfPosts();
                 }
@@ -150,9 +156,9 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     response = new ErrorMSG((short) 11, (short) 6);
                 else {
                     if (connections.getClientInfo(recipientID).getLoggedIn() == true)
-                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent()));
+                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent()+ msg.getDateTime()));
                     else
-                        connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent()));
+                        connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent() + msg.getDateTime()));
                     response = new AckMSG((short)10, (short)6);
                 }
                 connections.getHandler(clientID).send(response);
@@ -164,9 +170,11 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 7));
                 else {
                     for (Object ID : connections.getLoggedUsers()) {
-                        ClientInfo checkedClient = connections.getClientInfo((int)ID);
-                        connections.getHandler(clientID).send(new StatAckMSG((short)10,(short)7, checkedClient.getAge(),
-                                checkedClient.getNumOfPosts(),checkedClient.getNumOfFollowers(),checkedClient.getNumOfFollowing()));
+                        if (!client.isBlocked((int)ID)) {
+                            ClientInfo checkedClient = connections.getClientInfo((int) ID);
+                            connections.getHandler(clientID).send(new StatAckMSG((short) 10, (short) 7, checkedClient.getAge(),
+                                    checkedClient.getNumOfPosts(), checkedClient.getNumOfFollowers(), checkedClient.getNumOfFollowing()));
+                        }
                     }
                 }
             }
@@ -190,10 +198,34 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     }
                     for (String s : usernamesList){
                         int ID = connections.getClientId(s);
-                        ClientInfo checkedClient = connections.getClientInfo(ID);
-                        connections.getHandler(clientID).send(new StatAckMSG((short)10,(short)8, checkedClient.getAge(),
-                                checkedClient.getNumOfPosts(),checkedClient.getNumOfFollowers(),checkedClient.getNumOfFollowing()));
+                        if (!client.isBlocked(ID)) {
+                            ClientInfo checkedClient = connections.getClientInfo(ID);
+                            connections.getHandler(clientID).send(new StatAckMSG((short) 10, (short) 8, checkedClient.getAge(),
+                                    checkedClient.getNumOfPosts(), checkedClient.getNumOfFollowers(), checkedClient.getNumOfFollowing()));
+                        }
                     }
+                }
+            }
+            case 12 : {
+                BlockMSG msg = (BlockMSG) message;
+                MSG response;
+                ClientInfo client = connections.getClientInfo(clientID);
+                int toBlockID = connections.getClientId(msg.getUsername());
+                if (client == null || !client.getLoggedIn() | toBlockID == -1) // if not registered / not logged in
+                    connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 12));
+                else {
+                    ClientInfo toBlock = connections.getClientInfo(toBlockID);
+                    if (client.isFollowing(toBlockID)) {
+                        client.unFollow(toBlockID);
+                        toBlock.removeFollower(clientID);
+                    }
+                    if (toBlock.isFollowing(clientID)) {
+                        toBlock.unFollow(clientID);
+                        client.removeFollower(toBlockID);
+                    }
+                    client.block(toBlockID);
+                    toBlock.block(clientID);
+                    connections.getHandler(clientID).send(new AckMSG((short)10,(short)12));
                 }
             }
 

@@ -108,6 +108,14 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                     StatMSG statMSG = new StatMSG(usernames);
                     return statMSG;
                 }
+                case 12 : {
+                    int i = 2;
+                    while (bytes[i] != '\0')
+                        i++;
+                    String username = new String(bytes, 2, i, StandardCharsets.UTF_8);
+                    BlockMSG blockMSG = new BlockMSG(username);
+                    return blockMSG;
+                }
             }
         }
         else {
@@ -127,38 +135,68 @@ public class EncoderDecoder implements MessageEncoderDecoder {
         byte[] output = null;
         if (msg instanceof NotificationMSG){
             NotificationMSG notificationMSG = (NotificationMSG) msg;
-            String s = notificationMSG.getOpcode() + notificationMSG.getType() + notificationMSG.getPostingUser() + "\0" +
+            byte[] opcode = shortToBytes(notificationMSG.getOpcode());
+            String s = notificationMSG.getType() + notificationMSG.getPostingUser() + "\0" +
                     notificationMSG.getContent() + '\0' + ";";
-            output = s.getBytes(StandardCharsets.UTF_8);
+            byte[][] tmp = {opcode, s.getBytes(StandardCharsets.UTF_8)};
+            output = makeByteArray(tmp);
         }
         if (msg instanceof AckMSG){
             AckMSG ackMSG = (AckMSG) message;
             if (msg instanceof FollowAckMSG){
                 FollowAckMSG followAckMSG = (FollowAckMSG) ackMSG;
-                String s = followAckMSG.getOpcode() + followAckMSG.getMessageOpcode() + followAckMSG.getUsername() + '\0' + ";";
-                output = s.getBytes(StandardCharsets.UTF_8);
+                byte[] opcode = shortToBytes(followAckMSG.getOpcode());
+                byte[] messageOpcode = shortToBytes(followAckMSG.getMessageOpcode());
+                String s =  followAckMSG.getUsername() + '\0' + ";";
+                byte[][] tmp = {opcode, messageOpcode, s.getBytes(StandardCharsets.UTF_8)};
+                output = makeByteArray(tmp);
             }
             else if (msg instanceof StatAckMSG){
                 StatAckMSG statAckMSG = (StatAckMSG) ackMSG;
-                String s = statAckMSG.getOpcode() + statAckMSG.getMessageOpcode() + statAckMSG.getAge() +
-                        statAckMSG.getNumOfPosts() + statAckMSG.getNumOfFollowers() + statAckMSG.getNumOfFollowing() + ";";
-                output = s.getBytes(StandardCharsets.UTF_8);
+                byte[] opcode = shortToBytes(statAckMSG.getOpcode());
+                byte[] messageOpcode = shortToBytes(statAckMSG.getMessageOpcode());
+                byte[] age = shortToBytes(statAckMSG.getAge());
+                byte[] numOfPosts = shortToBytes(statAckMSG.getNumOfPosts());
+                byte[] numOfFollowers = shortToBytes(statAckMSG.getNumOfFollowers());
+                byte[] numOfFollowing = shortToBytes(statAckMSG.getNumOfFollowing());
+                String s = ";";
+                byte[][] tmp = {opcode, messageOpcode, age, numOfPosts, numOfFollowers, numOfFollowing, s.getBytes(StandardCharsets.UTF_8)};
+                output = makeByteArray(tmp);
             }
             else{ //regular Ack message
-                String s = ackMSG.getOpcode() + ackMSG.getMessageOpcode() + ";";
-                output = s.getBytes(StandardCharsets.UTF_8);
+                byte[] opcode = shortToBytes(ackMSG.getOpcode());
+                byte[] messageOpcode = shortToBytes(ackMSG.getMessageOpcode());
+                String s = ";";
+                byte[][] tmp = {opcode, messageOpcode, s.getBytes(StandardCharsets.UTF_8)};
+                output = makeByteArray(tmp);
             }
         }
         else if (msg instanceof ErrorMSG){
             ErrorMSG errorMSG = (ErrorMSG) msg;
-            String s = errorMSG.getOpcode() + errorMSG.getMessageOpcode() + ";";
-            output = s.getBytes(StandardCharsets.UTF_8);
+            byte[] opcode = shortToBytes(errorMSG.getOpcode());
+            byte[] messageOpcode = shortToBytes(errorMSG.getMessageOpcode());
+            String s = ";";
+            byte[][] tmp = {opcode, messageOpcode, s.getBytes(StandardCharsets.UTF_8)};
+            output = makeByteArray(tmp);
         }
         else if (msg instanceof BlockMSG){
             BlockMSG blockMSG = (BlockMSG) msg;
             String s = blockMSG.getOpcode() + blockMSG.getUsername() + '\0' + ";";
             output = s.getBytes(StandardCharsets.UTF_8);
         }
+        return output;
+    }
+
+    private byte[] makeByteArray(byte[][] toMerge){
+        int size = 0;
+        for (int i = 0; i < toMerge.length; i++)
+            for (int j = 0; j < toMerge[i].length; i++)
+                size++;
+        byte[] output = new byte[size];
+        int index = 0;
+        for (int i = 0; i < toMerge.length; i++)
+            for (int j = 0; j < toMerge[i].length; i++)
+                output[index++] = toMerge[i][j];
         return output;
     }
 }
