@@ -45,7 +45,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 else { // the client is Registered
                     ClientInfo client = connections.getClientInfo(clientID);
                     if (!msg.getPassword().equals(client.getPassword()) |
-                            client.getLoggedIn() == true | msg.getCaptcha() == 0) // verify password, isLoggedIn, captcha
+                            client.getLoggedIn() | msg.getCaptcha() == 0) // verify password, isLoggedIn, captcha
                         response = new ErrorMSG((short) 11, (short) 2);
                     else {
                         client.setLoggedIn(true);
@@ -60,7 +60,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
             case 3: {
                 ClientInfo client = connections.getClientInfo(clientID);
                 MSG response;
-                if (client == null || client.getLoggedIn() == false) // if not Registered | not logged in
+                if (client == null || !client.getLoggedIn()) // if not Registered | not logged in
                     response = new ErrorMSG((short) 11, (short) 3);
                 else {
                     connections.getClientInfo(clientID).setLoggedIn(false);
@@ -73,7 +73,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 MSG response;
                 ClientInfo client = connections.getClientInfo(clientID);
                 int toFollowID = connections.getClientId(msg.getUsername());
-                if (client == null || client.getLoggedIn() == false |
+                if (client == null || !client.getLoggedIn() |
                         toFollowID == -1) //check if both users are registered and follower is logged in
                     response = new ErrorMSG((short) 11, (short) 4);
                 else if (msg.getFollow() == 0) { //follow
@@ -104,30 +104,29 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 LinkedList<Integer> loggedViewers = new LinkedList<>();
                 LinkedList<Integer> unLoggedViewers = new LinkedList<>();
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn() == false) { // if not registered / logged in
+                if (client == null || client.getLoggedIn()) { // if not registered / logged in
                     response = new ErrorMSG((short) 11, (short) 5);
                     error = true;
                 }
                 String content = msg.getContent();
-                for (int i = 0; i < content.length() & error == false; i++) {
+                for (int i = 0; i < content.length() & !error; i++) {
                     if (content.charAt(i) == '@') {
                         String viewer = "";
                         for (int j = i++; j < content.length() && content.charAt(j) != ' '; j++) {
                             viewer += content.charAt(j);
                         }
                         int viewerID = connections.getClientId(viewer);
-                        if (viewerID == -1) { //viewer is not registered
-                            response = new ErrorMSG((short) 11, (short) 5);
-                            error = true;
-                        } else if (connections.getClientInfo(viewerID).getLoggedIn() == true)
-                            loggedViewers.add(viewerID);
-                        else
-                            unLoggedViewers.add(viewerID);
+                        if (viewerID != -1) { //viewer is registered
+                           if (connections.getClientInfo(viewerID).getLoggedIn())
+                                loggedViewers.add(viewerID);
+                            else
+                                unLoggedViewers.add(viewerID);
+                        }
                     }
                 }
                 if (!error) {
                     for (int ID : client.getFollowers()) {
-                        if (connections.getClientInfo(ID).getLoggedIn() == true)
+                        if (connections.getClientInfo(ID).getLoggedIn())
                             loggedViewers.add(ID);
                         else
                             unLoggedViewers.add(ID);
@@ -150,12 +149,12 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 MSG response;
                 ClientInfo client = connections.getClientInfo(clientID);
                 int recipientID = connections.getClientId(msg.getUsername());
-                if (client == null || client.getLoggedIn() == false | recipientID == -1) // if not registered / not logged in
+                if (client == null || !client.getLoggedIn() | recipientID == -1) // if not registered / not logged in
                     response = new ErrorMSG((short) 11, (short) 6);
                 else if (!client.isFollowing(recipientID))
                     response = new ErrorMSG((short) 11, (short) 6);
                 else {
-                    if (connections.getClientInfo(recipientID).getLoggedIn() == true)
+                    if (connections.getClientInfo(recipientID).getLoggedIn())
                         connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent()+ msg.getDateTime()));
                     else
                         connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent() + msg.getDateTime()));
@@ -166,7 +165,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
             case 7 : {
                 LogstatMSG msg = (LogstatMSG) message;
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn() == false ) // if not registered / not logged in
+                if (client == null || !client.getLoggedIn()) // if not registered / not logged in
                     connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 7));
                 else {
                     for (Object ID : connections.getLoggedUsers()) {
