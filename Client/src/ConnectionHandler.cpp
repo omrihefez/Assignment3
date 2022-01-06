@@ -139,6 +139,8 @@ Message* ConnectionHandler::getMessage(short opcode) {
             std::string postingUser = getString();
             std::string content = getString();
             output = new Notification(type,postingUser,content);
+            std::string s = "";
+            ConnectionHandler::getLine(s);
             break;
         }
         case 10: {
@@ -186,16 +188,22 @@ Message* ConnectionHandler::getMessage(short opcode) {
                     break;
                 }
             }
+            std::string s = "";
+            ConnectionHandler::getLine(s);
             break;
         }
         case 11: {
             short messageOpcode = getShort();
             output = new Error(messageOpcode);
+            std::string s = "";
+            ConnectionHandler::getLine(s);
             break;
         }
         case 12:{
             std::string username = getString();
             output = new Block(username);
+            std::string s = "";
+            ConnectionHandler::getLine(s);
             break;
         }
     }

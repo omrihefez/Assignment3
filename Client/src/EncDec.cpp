@@ -12,14 +12,30 @@
 #include <iomanip>
 #include "StatAckMessage.h"
 
+std::string EncDec::shortToBytes(short num){
+    std::string bytesArr;
+    bytesArr.append(1,(char) ((num >> 8) & 0xFF));
+    bytesArr.append(1,(char)(num & 0xFF));
+    return bytesArr;
+}
+
+//void EncDec::shortToBytes(short num, char* bytesArr) {
+//    bytesArr[0] = ((num >> 8) & 0xFF);
+//    bytesArr[1] = (num & 0xFF);
+//}
+
 
 
 std::string EncDec::encode(std::string toEncode) {
+    char* bytesArr = new char[2]();
     std::string output = "";
     short opcode = -1;
     if (toEncode.substr(0, 8) == "REGISTER"){
         opcode = 1;
-        output += "01";
+        output += shortToBytes(opcode);
+//        output += "01";
+//        EncDec::shortToBytes(opcode,bytesArr);
+//        output += bytesArr[0] + bytesArr[1];
     }
     else if (toEncode.substr(0, 5) == "LOGIN"){
         opcode = 2;
@@ -60,6 +76,7 @@ std::string EncDec::encode(std::string toEncode) {
                 index++;
             }
             output += '\0';
+//            01almog\01234\019-05-1997;
             break;
         }
         case 2: {
@@ -130,5 +147,5 @@ std::string EncDec::encode(std::string toEncode) {
             break;
         }
     }
-    return output;
+    return output + ";";
 }

@@ -50,10 +50,11 @@ public class ConnectionHandlerImpl<T> implements Runnable,ConnectionHandler {
                     }
                 }
                 MSG nextMessage = null;
-                while (nextMessage == null) {
+                if (nextMessage == null) {
                     nextMessage = encdec.decodeNextByte((byte) read);
                 }
-                protocol.process(nextMessage);
+                if (nextMessage != null)
+                    protocol.process(nextMessage);
             }
         }
 

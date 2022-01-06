@@ -36,9 +36,9 @@ public class ClientInfo {
     }
 
     private int birthdayToAge(String birthday){
-        int day = Integer.parseInt(birthday.substring(0,1));
-        int month = Integer.parseInt(birthday.substring(2,3));
-        int year = Integer.parseInt(birthday.substring(4,7));
+        int day = Integer.parseInt(birthday.substring(0,2));
+        int month = Integer.parseInt(birthday.substring(3,5));
+        int year = Integer.parseInt(birthday.substring(6,birthday.length()));
         LocalDate today = LocalDate.now();
         LocalDate birthDate = LocalDate.of(year,month,day);
         return Period.between(birthDate, today).getYears();

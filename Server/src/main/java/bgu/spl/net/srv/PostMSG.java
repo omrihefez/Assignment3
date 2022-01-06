@@ -1,5 +1,7 @@
 package bgu.spl.net.srv;
 
+import java.util.Vector;
+
 public class PostMSG extends MSG{
 
     private String content;
@@ -12,4 +14,5 @@ public class PostMSG extends MSG{
     public String getContent() {
         return content;
     }
+
 }

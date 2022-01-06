@@ -1,5 +1,7 @@
 package bgu.spl.net.srv;
 
+import java.util.Vector;
+
 public class PMMSG extends MSG {
 
     private String username;
@@ -16,11 +18,17 @@ public class PMMSG extends MSG {
     public String getUsername(){
         return username;
     }
-    public String getContent(){
-        return content;
+    public String getContent(Vector<String> filter){
+        return filter(filter,content);
     }
 
     public String getDateTime() {
         return dateTime;
+    }
+
+    private String filter(Vector<String> filter, String toFilter){
+        for (String word : filter)
+            toFilter = toFilter.replaceAll(word, "<filtered>");
+        return toFilter;
     }
 }

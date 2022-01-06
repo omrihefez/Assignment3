@@ -5,16 +5,21 @@ import bgu.spl.net.srv.bidi.ConnectionHandler;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Vector;
 
 
 public class ConnectionsImpl <T> implements Connections<T> {
 
     private HashMap<Integer, ConnectionHandlerImpl<T>> connectionsMap = new HashMap<>();
     private HashMap<Integer, ClientInfo> idClientMap = new HashMap<>();
+    private Vector<String> filter;
+
 //    private static ConnectionsImpl instance = null;
 //    private static boolean isDone = false;
 
-    public ConnectionsImpl(){}
+    public ConnectionsImpl(Vector<String> _filter){
+        filter = _filter;
+    }
 
 //    public static ConnectionsImpl getInstance() {
 //        if(isDone == false) {
@@ -37,10 +42,8 @@ public class ConnectionsImpl <T> implements Connections<T> {
     }
 
     public void setClient(int _clientID, String username, String password, String birthday){
-        ClientInfo client = idClientMap.get(_clientID);
-        client.setUsername(username);
-        client.setBirthday(birthday);
-        client.setPassword(password);
+        ClientInfo client = new ClientInfo(username, password, birthday);
+        addClientInfo(_clientID, client);
     }
 
     public void broadcast(T msg){
@@ -100,5 +103,9 @@ public class ConnectionsImpl <T> implements Connections<T> {
             if (username == entry.getValue().getUsername())
                 return entry.getKey();
         return -1;
+    }
+
+    public Vector<String> getFilter(){
+        return filter;
     }
 }
