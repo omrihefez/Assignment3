@@ -14,8 +14,8 @@ public class ProtocolImpl implements BidiMessagingProtocol {
     private int clientID;
 
     @Override
-    public void start(int connectionId, Connections connections) {
-        connections = connections;
+    public void start(int connectionId, Connections _connections) {
+        connections = (ConnectionsImpl) _connections;
         clientID = connectionId;
     }
 
@@ -36,6 +36,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     response = new ErrorMSG((short) 11, (short) 1);
                 }
                 connections.getHandler(clientID).send(response);
+                break;
             }
             case 2: {
                 LoginMSG msg = (LoginMSG) message;
@@ -56,6 +57,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 while (!connections.getClientInfo(clientID).getPostsToView().isEmpty()){
                     connections.getHandler(clientID).send(connections.getClientInfo(clientID).getPostsToView().poll());
                 }
+                break;
             }
             case 3: {
                 ClientInfo client = connections.getClientInfo(clientID);
@@ -67,6 +69,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     response = new AckMSG((short) 10, (short) 3);
                 }
                 connections.getHandler(clientID).send(response);
+                break;
             }
             case 4: {
                 FollowMSG msg = (FollowMSG) message;
@@ -96,6 +99,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     }
                 }
                 connections.getHandler(clientID).send(response);
+                break;
             }
             case 5: {
                 PostMSG msg = (PostMSG) message;
@@ -140,6 +144,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     client.increaseNumOfPosts();
                 }
                 connections.getHandler(clientID).send(response);
+                break;
             }
             case 6: {
                 PMMSG msg = (PMMSG) message;
@@ -158,6 +163,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     response = new AckMSG((short)10, (short)6);
                 }
                 connections.getHandler(clientID).send(response);
+                break;
             }
             case 7 : {
                 LogstatMSG msg = (LogstatMSG) message;
@@ -173,6 +179,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                         }
                     }
                 }
+                break;
             }
             case 8 : {
                 StatMSG msg = (StatMSG) message;
@@ -201,6 +208,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                         }
                     }
                 }
+                break;
             }
             case 12 : {
                 BlockMSG msg = (BlockMSG) message;
@@ -223,6 +231,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     toBlock.block(clientID);
                     connections.getHandler(clientID).send(new AckMSG((short)10,(short)12));
                 }
+                break;
             }
 
 

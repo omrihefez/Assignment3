@@ -13,6 +13,7 @@ class EncDec {
 
 public:
     std::string encode(std::string toEncode);
+    std::string shortToBytes(short num);
 
 };
 

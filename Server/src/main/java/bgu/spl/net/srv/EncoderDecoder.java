@@ -25,7 +25,7 @@ public class EncoderDecoder implements MessageEncoderDecoder {
 
     @Override
     public MSG decodeNextByte(byte nextByte) {
-        if (nextByte == ';') {
+        if (nextByte == ";".getBytes(StandardCharsets.UTF_8)[0]) {
             byte[] opCodeBytes = {bytes[0], bytes[1]};
             short opCode = bytesToShort(opCodeBytes);
             switch (opCode) {
@@ -33,15 +33,15 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                     int i = 2;
                     while (bytes[i] != '\0')
                         i++;
-                    String username = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    int j = i++;
+                    String username = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
+                    int j = ++i;
                     while (bytes[i] != '\0')
                         i++;
-                    String password = new String(bytes, j, i, StandardCharsets.UTF_8);
-                    j = i++;
+                    String password = new String(bytes, j, i-j, StandardCharsets.UTF_8);
+                    j = ++i;
                     while (bytes[i] != '\0')
                         i++;
-                    String birthday = new String(bytes, j, i, StandardCharsets.UTF_8);
+                    String birthday = new String(bytes, j, i-j, StandardCharsets.UTF_8);
                     RegisterMSG registerMSG = new RegisterMSG(username, password, birthday);
                     return registerMSG;
                 }
@@ -190,12 +190,12 @@ public class EncoderDecoder implements MessageEncoderDecoder {
     private byte[] makeByteArray(byte[][] toMerge){
         int size = 0;
         for (int i = 0; i < toMerge.length; i++)
-            for (int j = 0; j < toMerge[i].length; i++)
+            for (int j = 0; j < toMerge[i].length; j++)
                 size++;
         byte[] output = new byte[size];
         int index = 0;
         for (int i = 0; i < toMerge.length; i++)
-            for (int j = 0; j < toMerge[i].length; i++)
+            for (int j = 0; j < toMerge[i].length; j++)
                 output[index++] = toMerge[i][j];
         return output;
     }

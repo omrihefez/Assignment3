@@ -2,7 +2,6 @@ package bgu.spl.net.srv;
 
 public class AckMSG extends MSG {
 
-    private short opcode;
     private short messageOpcode;
 
     public AckMSG(short _opcode,short _messageOpcode){

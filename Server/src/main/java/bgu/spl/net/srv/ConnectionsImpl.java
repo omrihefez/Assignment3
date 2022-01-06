@@ -42,10 +42,8 @@ public class ConnectionsImpl <T> implements Connections<T> {
     }
 
     public void setClient(int _clientID, String username, String password, String birthday){
-        ClientInfo client = idClientMap.get(_clientID);
-        client.setUsername(username);
-        client.setBirthday(birthday);
-        client.setPassword(password);
+        ClientInfo client = new ClientInfo(username, password, birthday);
+        addClientInfo(_clientID, client);
     }
 
     public void broadcast(T msg){
