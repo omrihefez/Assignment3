@@ -27,43 +27,39 @@ std::string EncDec::shortToBytes(short num){
 
 
 std::string EncDec::encode(std::string toEncode) {
-    char* bytesArr = new char[2]();
     std::string output = "";
     short opcode = -1;
     if (toEncode.substr(0, 8) == "REGISTER"){
         opcode = 1;
         output += shortToBytes(opcode);
-//        output += "01";
-//        EncDec::shortToBytes(opcode,bytesArr);
-//        output += bytesArr[0] + bytesArr[1];
     }
     else if (toEncode.substr(0, 5) == "LOGIN"){
         opcode = 2;
-        output += "02";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 6) == "LOGOUT"){
         opcode = 3;
-        output += "03";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 6) == "FOLLOW"){
         opcode = 4;
-        output += "04";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 4) == "POST"){
         opcode = 5;
-        output += "05";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 2) == "PM"){
         opcode = 6;
-        output += "06";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 7) == "LOGSTAT"){
         opcode = 7;
-        output += "07";
+        output += shortToBytes(opcode);
     }
     else if (toEncode.substr(0, 4) == "STAT"){
         opcode = 8;
-        output += "08";
+        output += shortToBytes(opcode);
     }
     switch (opcode) {
         case 1: {
@@ -76,7 +72,6 @@ std::string EncDec::encode(std::string toEncode) {
                 index++;
             }
             output += '\0';
-//            01almog\01234\019-05-1997;
             break;
         }
         case 2: {
@@ -88,6 +83,9 @@ std::string EncDec::encode(std::string toEncode) {
                     output += toEncode[index];
                 index++;
             }
+            std::string tmp = output;
+            output += '\0';
+            bool b = tmp == output;
             break;
         }
         case 3: {
@@ -126,13 +124,14 @@ std::string EncDec::encode(std::string toEncode) {
                 content += toEncode[index];
                 index++;
             }
-            char time_buf[16];
-            time_t now;
-            time(&now);
-            strftime(time_buf, 16, "%d-%m-%Y %H:%M", gmtime(&now));
-            std::string time = time_buf;
-            output += username + '\0' + content + '\0' + time + '\0';
-            break;
+            time_t rawtime;
+            struct tm * timeinfo;
+            char buffer[80];
+            time (&rawtime);
+            timeinfo = localtime(&rawtime);
+            strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M",timeinfo);
+            std::string str(buffer);
+            output += str + '\0';
         }
         case 7: {
             break;
@@ -147,5 +146,5 @@ std::string EncDec::encode(std::string toEncode) {
             break;
         }
     }
-    return output + ";";
+    return output;
 }

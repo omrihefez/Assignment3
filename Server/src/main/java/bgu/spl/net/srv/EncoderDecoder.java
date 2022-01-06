@@ -26,96 +26,101 @@ public class EncoderDecoder implements MessageEncoderDecoder {
     @Override
     public MSG decodeNextByte(byte nextByte) {
         if (nextByte == ";".getBytes(StandardCharsets.UTF_8)[0]) {
-            byte[] opCodeBytes = {bytes[0], bytes[1]};
-            short opCode = bytesToShort(opCodeBytes);
-            switch (opCode) {
-                case 1: {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String username = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
-                    int j = ++i;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String password = new String(bytes, j, i-j, StandardCharsets.UTF_8);
-                    j = ++i;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String birthday = new String(bytes, j, i-j, StandardCharsets.UTF_8);
-                    RegisterMSG registerMSG = new RegisterMSG(username, password, birthday);
-                    return registerMSG;
-                }
-                case 2: {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String username = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    int j = i++;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String password = new String(bytes, j, i, StandardCharsets.UTF_8);
-                    short captcha = bytesToShort(new byte[]{bytes[bytes.length - 1]});
-                    LoginMSG loginMSG = new LoginMSG(username, password, captcha);
-                    return loginMSG;
+            try {
+                byte[] opCodeBytes = {bytes[0], bytes[1]};
+                short opCode = bytesToShort(opCodeBytes);
+                switch (opCode) {
+                    case 1: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String username = new String(bytes, 2, i - 2, StandardCharsets.UTF_8);
+                        int j = ++i;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String password = new String(bytes, j, i - j, StandardCharsets.UTF_8);
+                        j = ++i;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String birthday = new String(bytes, j, i - j, StandardCharsets.UTF_8);
+                        RegisterMSG registerMSG = new RegisterMSG(username, password, birthday);
+                        return registerMSG;
+                    }
+                    case 2: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String username = new String(bytes, 2, i -2, StandardCharsets.UTF_8);
+                        int j = i++;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String password = new String(bytes, j, i-j, StandardCharsets.UTF_8);
+                        short captcha = bytesToShort(new byte[]{bytes[bytes.length - 1]});
+                        LoginMSG loginMSG = new LoginMSG(username, password, captcha);
+                        return loginMSG;
 
+                    }
+                    case 3: {
+                        LogoutMSG logoutMSG = new LogoutMSG();
+                        return logoutMSG;
+                    }
+                    case 4: {
+                        short follow = bytes[2];
+                        int i = 3;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String username = new String(bytes, 3, i-3, StandardCharsets.UTF_8);
+                        FollowMSG followMSG = new FollowMSG(follow, username);
+                        return followMSG;
+                    }
+                    case 5: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String content = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
+                        PostMSG postMSG = new PostMSG(content);
+                        return postMSG;
+                    }
+                    case 6: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String username = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
+                        int j = i++;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String content = new String(bytes, j, i-j, StandardCharsets.UTF_8);
+                        j = i++;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String dateTime = new String(bytes, j, i-j, StandardCharsets.UTF_8);
+                        PMMSG pmMSG = new PMMSG(username, content, dateTime);
+                        return pmMSG;
+                    }
+                    case 7: {
+                        LogstatMSG logstatMSG = new LogstatMSG();
+                        return logstatMSG;
+                    }
+                    case 8: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String usernames = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
+                        StatMSG statMSG = new StatMSG(usernames);
+                        return statMSG;
+                    }
+                    case 12: {
+                        int i = 2;
+                        while (bytes[i] != '\0')
+                            i++;
+                        String username = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
+                        BlockMSG blockMSG = new BlockMSG(username);
+                        return blockMSG;
+                    }
                 }
-                case 3: {
-                    LogoutMSG logoutMSG = new LogoutMSG();
-                    return logoutMSG;
-                }
-                case 4: {
-                    short follow = bytes[2];
-                    int i = 3;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String username = new String(bytes, 3, i, StandardCharsets.UTF_8);
-                    FollowMSG followMSG = new FollowMSG(follow, username);
-                    return followMSG;
-                }
-                case 5: {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String content = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    PostMSG postMSG = new PostMSG(content);
-                    return postMSG;
-                }
-                case 6: {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String username = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    int j = i++;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String content = new String(bytes, j, i, StandardCharsets.UTF_8);
-                    j = i++;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String dateTime = new String(bytes, j, i, StandardCharsets.UTF_8);
-                    PMMSG pmMSG = new PMMSG(username, content, dateTime);
-                    return pmMSG;
-                }
-                case 7: {
-                    LogstatMSG logstatMSG = new LogstatMSG();
-                    return logstatMSG;
-                }
-                case 8: {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String usernames = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    StatMSG statMSG = new StatMSG(usernames);
-                    return statMSG;
-                }
-                case 12 : {
-                    int i = 2;
-                    while (bytes[i] != '\0')
-                        i++;
-                    String username = new String(bytes, 2, i, StandardCharsets.UTF_8);
-                    BlockMSG blockMSG = new BlockMSG(username);
-                    return blockMSG;
-                }
+            } finally {
+                bytes = new byte[1 << 10];
+                len = 0;
             }
         }
         else {

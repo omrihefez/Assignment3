@@ -42,6 +42,12 @@ public class ConnectionHandlerImpl<T> implements Runnable,ConnectionHandler {
              BufferedOutputStream out = new BufferedOutputStream(sock.getOutputStream())) {
             int read;
             while (!protocol.shouldTerminate() && ((read = in.read()) >= 0) | !outputQueue.isEmpty()) {
+                MSG nextMessage = null;
+                if (nextMessage == null) {
+                    nextMessage = encdec.decodeNextByte((byte) read);
+                }
+                if (nextMessage != null)
+                    protocol.process(nextMessage);
                 while (!outputQueue.isEmpty()) {
                     try {
                         out.write(outputQueue.poll());
@@ -49,12 +55,6 @@ public class ConnectionHandlerImpl<T> implements Runnable,ConnectionHandler {
                     } catch (Exception e) {
                     }
                 }
-                MSG nextMessage = null;
-                if (nextMessage == null) {
-                    nextMessage = encdec.decodeNextByte((byte) read);
-                }
-                if (nextMessage != null)
-                    protocol.process(nextMessage);
             }
         }
 
