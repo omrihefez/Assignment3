@@ -72,7 +72,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 break;
             }
             case 4: {
-                FollowMSG msg = (FollowMSG) message;
+                    FollowMSG msg = (FollowMSG) message;
                 MSG response;
                 ClientInfo client = connections.getClientInfo(clientID);
                 int toFollowID = connections.getClientId(msg.getUsername());
@@ -192,7 +192,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     int i = 0;
                     while (i < usernames.length()){
                         String username = "";
-                        for (int j = i ; j < usernames.length() & usernames.charAt(j) != '|' ; j++) {
+                        for (int j = i ; j < usernames.length() && usernames.charAt(j) != '|' ; j++) {
                             username += usernames.charAt(j);
                             i++;
                         }
