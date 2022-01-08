@@ -92,6 +92,7 @@ std::string EncDec::encode(std::string toEncode) {
         case 4: {
             size_t index = toEncode.find_first_of(' ') + 1;
             output += toEncode[index++];
+            index++;
             while (index < toEncode.length()) {
                 if (toEncode[index] != ';')
                     output += toEncode[index];

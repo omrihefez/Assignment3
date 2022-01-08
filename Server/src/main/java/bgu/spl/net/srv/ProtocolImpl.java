@@ -107,7 +107,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 LinkedList<Integer> loggedViewers = new LinkedList<>();
                 LinkedList<Integer> unLoggedViewers = new LinkedList<>();
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn()) // if not registered / logged in
+                if (client == null || !client.getLoggedIn()) // if not registered / logged in
                     response = new ErrorMSG((short) 11, (short) 5);
                 else {
                     String content = msg.getContent();
@@ -192,7 +192,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     int i = 0;
                     while (i < usernames.length()){
                         String username = "";
-                        for (int j = i ; j < usernames.length() & usernames.charAt(j) != '|' ; j++) {
+                        for (int j = i ; j < usernames.length() && usernames.charAt(j) != '|' ; j++) {
                             username += usernames.charAt(j);
                             i++;
                         }
