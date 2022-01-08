@@ -18,8 +18,11 @@ void readFromServer(ConnectionHandler& connectionHandler) {
             m = connectionHandler.getMessage(opcode);
             std::cout << m->toString() << std::endl;
             if (dynamic_cast<AckMessage*>(m) != nullptr)
-                if ((static_cast<AckMessage *>(m))->getMessageOpcode() == 3)
+                if ((static_cast<AckMessage *>(m))->getMessageOpcode() == 3) {
                     terminate = true;
+                    std::cout << "terminating..." << std::endl;
+                    exit(0);
+                }
             delete m;
         } catch (std::exception &e) {}
     }

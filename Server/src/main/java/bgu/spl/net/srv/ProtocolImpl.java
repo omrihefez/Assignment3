@@ -27,7 +27,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 RegisterMSG msg = (RegisterMSG) message;
                 String username = msg.getUsername();
                 MSG response;
-                if (connections.getUsername(clientID) == null) {
+                if (connections.getUsername(clientID) == null & connections.getClientId(username) == -1) {
                     String password = msg.getPassword();
                     String birthday = msg.getBirthday();
                     connections.setClient(clientID, username, password, birthday);
@@ -41,7 +41,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
             case 2: {
                 LoginMSG msg = (LoginMSG) message;
                 MSG response;
-                if (connections.getUsername(clientID) == null)  //check if the client is Registered
+                if (connections.getClientId((msg).getUsername()) == -1)  //check if the client is Registered
                     response = new ErrorMSG((short) 11, (short) 2);
                 else { // the client is Registered
                     ClientInfo client = connections.getClientInfo(clientID);
@@ -107,7 +107,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                 LinkedList<Integer> loggedViewers = new LinkedList<>();
                 LinkedList<Integer> unLoggedViewers = new LinkedList<>();
                 ClientInfo client = connections.getClientInfo(clientID);
-                if (client == null || client.getLoggedIn()) // if not registered / logged in
+                if (client == null || !client.getLoggedIn()) // if not registered / logged in
                     response = new ErrorMSG((short) 11, (short) 5);
                 else {
                     String content = msg.getContent();

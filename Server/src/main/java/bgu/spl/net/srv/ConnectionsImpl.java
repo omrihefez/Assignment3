@@ -100,7 +100,7 @@ public class ConnectionsImpl <T> implements Connections<T> {
 
     public int getClientId(String username){
         for (HashMap.Entry<Integer, ClientInfo> entry : idClientMap.entrySet())
-            if (username == entry.getValue().getUsername())
+            if (username.equals(entry.getValue().getUsername()))
                 return entry.getKey();
         return -1;
     }
