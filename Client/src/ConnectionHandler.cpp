@@ -187,6 +187,10 @@ Message* ConnectionHandler::getMessage(short opcode) {
                     output = new StatAckMessage(8, age, numOfPosts, numOfFollowers, numOfFollowing);
                     break;
                 }
+                case 12 : {
+                    output = new AckMessage(12);
+                    break;
+                }
             }
             std::string s = "";
             ConnectionHandler::getLine(s);

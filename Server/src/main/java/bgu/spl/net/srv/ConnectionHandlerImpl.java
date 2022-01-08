@@ -53,6 +53,7 @@ public class ConnectionHandlerImpl<T> implements Runnable,ConnectionHandler {
                         out.write(outputQueue.poll());
                         out.flush();
                     } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
                 }
             }

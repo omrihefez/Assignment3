@@ -200,12 +200,16 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                         i++;
                     }
                     for (String s : usernamesList){
-                        int ID = connections.getClientId(s);
-                        if (!client.isBlocked(ID)) {
-                            ClientInfo checkedClient = connections.getClientInfo(ID);
-                            connections.getHandler(clientID).send(new StatAckMSG((short) 10, (short) 8, checkedClient.getAge(),
-                                    checkedClient.getNumOfPosts(), checkedClient.getNumOfFollowers(), checkedClient.getNumOfFollowing()));
+                        if (connections.getClientId(s) != -1 && !connections.getClientInfo(connections.getClientId(s)).isBlocked(clientID)) {
+                            int ID = connections.getClientId(s);
+                            if (!client.isBlocked(ID)) {
+                                ClientInfo checkedClient = connections.getClientInfo(ID);
+                                connections.getHandler(clientID).send(new StatAckMSG((short) 10, (short) 8, checkedClient.getAge(),
+                                        checkedClient.getNumOfPosts(), checkedClient.getNumOfFollowers(), checkedClient.getNumOfFollowing()));
+                            }
                         }
+                        else
+                            connections.getHandler(clientID).send(new ErrorMSG((short) 11, (short) 8));
                     }
                 }
                 break;

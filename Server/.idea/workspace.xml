@@ -5,11 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7be9687e-5103-4f51-8e04-c9875531d018" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Client/bin/AckMessage.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/AckMessage.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/bin/BGSclient" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/BGSclient" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/Block.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Block.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/bin/Client.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Client.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/EncDec.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/EncDec.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/Error.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Error.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/FollowAckMessage.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/FollowAckMessage.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/Message.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Message.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/Notification.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Notification.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/StatAckMessage.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/StatAckMessage.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/bin/connectionHandler.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/connectionHandler.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/EncDec.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/EncDec.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionHandlerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/rci/ObjectEncoderDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/impl/rci/ObjectEncoderDecoder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/AckMSG.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/AckMSG.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ClientInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ClientInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ConnectionHandlerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ConnectionHandlerImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ConnectionsImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ConnectionsImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/EncoderDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/EncoderDecoder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/NonBlockingConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/NonBlockingConnectionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/PMMSG.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/PMMSG.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/PostMSG.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/PostMSG.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ProtocolImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ProtocolImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/spl-net-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/spl-net-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +45,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="230TTF11ZaqqQtbWlQ3E706nS28" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -72,24 +98,12 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BaseServer.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionHandlerImpl.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionHandlerImpl.java</url>
           <line>49</line>
@@ -97,18 +111,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/EncoderDecoder.java</url>
-          <line>176</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="15" />
+          <line>216</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
