@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7be9687e-5103-4f51-8e04-c9875531d018" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Client/bin/BGSclient" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/BGSclient" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/bin/Client.o" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/bin/Client.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ConnectionsImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/EncoderDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/EncoderDecoder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ProtocolImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/ProtocolImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +20,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="230TTF11ZaqqQtbWlQ3E706nS28" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -72,6 +73,18 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -102,7 +115,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/EncoderDecoder.java</url>
-          <line>176</line>
+          <line>177</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

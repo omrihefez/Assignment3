@@ -212,7 +212,7 @@ Message* ConnectionHandler::getMessage(short opcode) {
 
 std::string ConnectionHandler::getString() {
     std::string output = "";
-    output = getFrameAscii(output, '\0');
+    getFrameAscii(output, '\0');
     return output;
 
 }

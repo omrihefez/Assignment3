@@ -114,7 +114,7 @@ public class ProtocolImpl implements BidiMessagingProtocol {
                     for (int i = 0; i < content.length() ; i++) {
                         if (content.charAt(i) == '@') {
                             String viewer = "";
-                            for (int j = i++; j < content.length() && content.charAt(j) != ' '; j++) {
+                            for (int j = ++i; j < content.length() && content.charAt(j) != ' '; j++) {
                                 viewer += content.charAt(j);
                             }
                             int viewerID = connections.getClientId(viewer);
