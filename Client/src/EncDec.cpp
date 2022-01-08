@@ -83,9 +83,7 @@ std::string EncDec::encode(std::string toEncode) {
                     output += toEncode[index];
                 index++;
             }
-            std::string tmp = output;
             output += '\0';
-            bool b = tmp == output;
             break;
         }
         case 3: {

@@ -51,11 +51,12 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                         while (bytes[i] != '\0')
                             i++;
                         String username = new String(bytes, 2, i -2, StandardCharsets.UTF_8);
-                        int j = i++;
+                        int j = ++i;
                         while (bytes[i] != '\0')
                             i++;
                         String password = new String(bytes, j, i-j, StandardCharsets.UTF_8);
-                        short captcha = bytesToShort(new byte[]{bytes[bytes.length - 1]});
+                        byte tmpCaptcha = bytes[++i];
+                        short captcha = tmpCaptcha == "1".getBytes(StandardCharsets.UTF_8)[0] ? (short) 1 : (short) 0;
                         LoginMSG loginMSG = new LoginMSG(username, password, captcha);
                         return loginMSG;
 
@@ -86,11 +87,11 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                         while (bytes[i] != '\0')
                             i++;
                         String username = new String(bytes, 2, i-2, StandardCharsets.UTF_8);
-                        int j = i++;
+                        int j = ++i;
                         while (bytes[i] != '\0')
                             i++;
                         String content = new String(bytes, j, i-j, StandardCharsets.UTF_8);
-                        j = i++;
+                        j = ++i;
                         while (bytes[i] != '\0')
                             i++;
                         String dateTime = new String(bytes, j, i-j, StandardCharsets.UTF_8);
