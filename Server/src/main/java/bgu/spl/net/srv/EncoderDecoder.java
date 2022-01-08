@@ -66,7 +66,8 @@ public class EncoderDecoder implements MessageEncoderDecoder {
                         return logoutMSG;
                     }
                     case 4: {
-                        short follow = bytes[2];
+                        byte tmpFollow = bytes[2];
+                        short follow = tmpFollow == "1".getBytes(StandardCharsets.UTF_8)[0] ? (short) 1 : (short) 0;
                         int i = 3;
                         while (bytes[i] != '\0')
                             i++;
