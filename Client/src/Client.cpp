@@ -20,7 +20,8 @@ void readFromServer(ConnectionHandler& connectionHandler) {
             if (dynamic_cast<AckMessage*>(m) != nullptr)
                 if ((static_cast<AckMessage *>(m))->getMessageOpcode() == 3) {
                     terminate = true;
-                    std::cout << "terminating..." << std::endl;
+                    std::cout << "Client logged out, goodbye!" << std::endl;
+                    delete m;
                     exit(0);
                 }
             delete m;

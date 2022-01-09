@@ -130,10 +130,12 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                         }
                     }
                     for (int ID : client.getFollowers()) {
-                        if (connections.getClientInfo(ID).getLoggedIn())
-                            loggedViewers.add(ID);
-                        else
-                            unLoggedViewers.add(ID);
+                        if (!loggedViewers.contains(ID) & !unLoggedViewers.contains(ID)){ //if not tagged
+                            if (connections.getClientInfo(ID).getLoggedIn())
+                                loggedViewers.add(ID);
+                            else
+                                unLoggedViewers.add(ID);
+                        }
                     }
                     for (int ID : loggedViewers) {
                         if (!client.isBlocked(ID))
