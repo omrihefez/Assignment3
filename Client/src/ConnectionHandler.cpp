@@ -160,6 +160,8 @@ Message* ConnectionHandler::getMessage(short opcode) {
                 }
                 case 4: {
                     std::string username = ConnectionHandler::getString();
+                    if (username[username.size()-1] == '\0')
+                        username = username.substr(0, username.size()-1);
                     output = new FollowAckMessage(4, username);
                     break;
                 }
@@ -187,6 +189,10 @@ Message* ConnectionHandler::getMessage(short opcode) {
                     output = new StatAckMessage(8, age, numOfPosts, numOfFollowers, numOfFollowing);
                     break;
                 }
+                case 12 : {
+                    output = new AckMessage(12);
+                    break;
+                }
             }
             std::string s = "";
             ConnectionHandler::getLine(s);
@@ -195,13 +201,6 @@ Message* ConnectionHandler::getMessage(short opcode) {
         case 11: {
             short messageOpcode = getShort();
             output = new Error(messageOpcode);
-            std::string s = "";
-            ConnectionHandler::getLine(s);
-            break;
-        }
-        case 12:{
-            std::string username = getString();
-            output = new Block(username);
             std::string s = "";
             ConnectionHandler::getLine(s);
             break;

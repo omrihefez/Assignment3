@@ -61,6 +61,10 @@ std::string EncDec::encode(std::string toEncode) {
         opcode = 8;
         output += shortToBytes(opcode);
     }
+    else if (toEncode.substr(0, 5) == "BLOCK"){
+        opcode = 12;
+        output += shortToBytes(opcode);
+    }
     switch (opcode) {
         case 1: {
             size_t index = toEncode.find_first_of(' ') + 1;
@@ -137,6 +141,15 @@ std::string EncDec::encode(std::string toEncode) {
             break;
         }
         case 8: {
+            size_t index = toEncode.find_first_of(' ') + 1;
+            while (index < toEncode.length()) {
+                output += toEncode[index];
+                index++;
+            }
+            output += '\0';
+            break;
+        }
+        case 12 : {
             size_t index = toEncode.find_first_of(' ') + 1;
             while (index < toEncode.length()) {
                 output += toEncode[index];
