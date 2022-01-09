@@ -130,7 +130,8 @@ std::string EncDec::encode(std::string toEncode) {
             timeinfo = localtime(&rawtime);
             strftime(buffer,sizeof(buffer),"%d-%m-%Y %H:%M",timeinfo);
             std::string str(buffer);
-            output += str + '\0';
+            output += username + '\0' + content + '\0' + str + '\0';
+            break;
         }
         case 7: {
             break;

@@ -44,7 +44,7 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                 if (connections.getClientId((msg).getUsername()) == -1)  //check if the client is Registered
                     response = new ErrorMSG((short) 11, (short) 2);
                 else { // the client is Registered
-                    ClientInfo client = connections.getClientInfo(clientID);
+                    ClientInfo client = connections.getClientInfo(connections.getClientId(msg.getUsername()));
                     if (!msg.getPassword().equals(client.getPassword()) |
                             client.getLoggedIn() | msg.getCaptcha() == 0) // verify password, isLoggedIn, captcha
                         response = new ErrorMSG((short) 11, (short) 2);
@@ -54,9 +54,9 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                     }
                 }
                 connections.getHandler(clientID).send(response);
-                while (!connections.getClientInfo(clientID).getPostsToView().isEmpty()){
-                    connections.getHandler(clientID).send(connections.getClientInfo(clientID).getPostsToView().poll());
-                }
+                if (response instanceof AckMSG)
+                    while (!connections.getClientInfo(clientID).getPostsToView().isEmpty())
+                        connections.getHandler(clientID).send(connections.getClientInfo(clientID).getPostsToView().poll());
                 break;
             }
             case 3: {
@@ -72,7 +72,7 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                 break;
             }
             case 4: {
-                    FollowMSG msg = (FollowMSG) message;
+                FollowMSG msg = (FollowMSG) message;
                 MSG response;
                 ClientInfo client = connections.getClientInfo(clientID);
                 int toFollowID = connections.getClientId(msg.getUsername());
@@ -157,7 +157,7 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                     response = new ErrorMSG((short) 11, (short) 6);
                 else {
                     if (connections.getClientInfo(recipientID).getLoggedIn())
-                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent(connections.getFilter())+ msg.getDateTime()));
+                        connections.getHandler(recipientID).send(new NotificationMSG(0, client.getUsername(), msg.getContent(connections.getFilter())+ " " + msg.getDateTime()));
                     else
                         connections.getClientInfo(recipientID).addPost(new NotificationMSG(0, client.getUsername(), msg.getContent(connections.getFilter()) + msg.getDateTime()));
                     response = new AckMSG((short)10, (short)6);
