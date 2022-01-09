@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7be9687e-5103-4f51-8e04-c9875531d018" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Client/src/Client.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Client.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/api/MessageEncoderDecoder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/api/MessageEncoderDecoder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/bgu/spl/net/srv/BaseServer.class" afterDir="false" />
@@ -100,7 +101,7 @@
       <workItem from="1641464754227" duration="22711000" />
       <workItem from="1641545933689" duration="2394000" />
       <workItem from="1641649275201" duration="4629000" />
-      <workItem from="1641722604612" duration="13650000" />
+      <workItem from="1641722604612" duration="13949000" />
     </task>
     <servers />
   </component>
@@ -133,19 +134,9 @@
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/EncoderDecoder.java</url>
           <line>177</line>
           <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/ProtocolImpl.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/bgu/spl/net/srv/BlockingConnectionHandler.java</url>

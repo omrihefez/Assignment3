@@ -2,6 +2,7 @@
 #include <ConnectionHandler.h>
 #include <EncDec.h>
 #include <AckMessage.h>
+#include <thread>
 
 /**
 * This code assumes that the server replies the exact text the client sent it (as opposed to the practical session example)
