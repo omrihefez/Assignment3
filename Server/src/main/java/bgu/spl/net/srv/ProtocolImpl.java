@@ -44,6 +44,9 @@ public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
                 if (connections.getClientId((msg).getUsername()) == -1)  //check if the client is Registered
                     response = new ErrorMSG((short) 11, (short) 2);
                 else { // the client is Registered
+                    if (connections.getClientInfo(clientID) != connections.getClientInfo(connections.getClientId(msg.getUsername()))){
+                        connections.updateId(clientID, connections.getClientId(msg.getUsername()));
+                    }
                     ClientInfo client = connections.getClientInfo(connections.getClientId(msg.getUsername()));
                     if (!msg.getPassword().equals(client.getPassword()) |
                             client.getLoggedIn() | msg.getCaptcha() == 0) // verify password, isLoggedIn, captcha

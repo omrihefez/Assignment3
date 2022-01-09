@@ -21,17 +21,10 @@ public class ConnectionsImpl <T> implements Connections<T> {
         filter = _filter;
     }
 
-//    public static ConnectionsImpl getInstance() {
-//        if(isDone == false) {
-//            synchronized(ConnectionsImpl.class) {
-//                if(isDone == false) {
-//                    instance = new ConnectionsImpl();
-//                    isDone = true;
-//                }
-//            }
-//        }
-//        return instance;
-//    }
+    public void updateId(int newId, int oldId){
+        connectionsMap.remove(oldId);
+        idClientMap.put(newId,idClientMap.remove(oldId));
+    }
 
     public boolean send(int connectionId, T msg) {
         if (connectionsMap.containsKey(connectionId)) {

@@ -108,7 +108,7 @@ public class Reactor<T> implements Server<T> {
                 protocolFactory.get(),
                 clientChan,
                 this, connections, clientID);
-        connections.addClient(clientID++, (bgu.spl.net.srv.bidi.ConnectionHandler) handler);
+        connections.addClient(clientID++, handler);
         clientChan.register(selector, SelectionKey.OP_READ, handler);
     }
 
