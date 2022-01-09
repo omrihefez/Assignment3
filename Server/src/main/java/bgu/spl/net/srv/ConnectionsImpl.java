@@ -10,7 +10,7 @@ import java.util.Vector;
 
 public class ConnectionsImpl <T> implements Connections<T> {
 
-    private HashMap<Integer, ConnectionHandlerImpl<T>> connectionsMap = new HashMap<>();
+    private HashMap<Integer, ConnectionHandler> connectionsMap = new HashMap<>();
     private HashMap<Integer, ClientInfo> idClientMap = new HashMap<>();
     private Vector<String> filter;
 
@@ -57,11 +57,11 @@ public class ConnectionsImpl <T> implements Connections<T> {
 
     }
 
-    public ConnectionHandlerImpl getHandler(int clientId){
+    public ConnectionHandler getHandler(int clientId){
         return connectionsMap.get(clientId);
     }
 
-    public void addClient(int clientId, ConnectionHandlerImpl connectionHandler) {
+    public void addClient(int clientId, ConnectionHandler connectionHandler) {
         connectionsMap.put(clientId, connectionHandler);
     }
 
@@ -88,7 +88,7 @@ public class ConnectionsImpl <T> implements Connections<T> {
         return -1;
     }
 
-    public HashMap<Integer, ConnectionHandlerImpl<T>> getConnectionsMap() {
+    public HashMap<Integer, ConnectionHandler> getConnectionsMap() {
         return connectionsMap;
     }
 

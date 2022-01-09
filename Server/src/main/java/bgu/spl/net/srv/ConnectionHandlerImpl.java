@@ -44,7 +44,7 @@ public class ConnectionHandlerImpl<T> implements Runnable,ConnectionHandler {
             while (!protocol.shouldTerminate() && ((read = in.read()) >= 0) | !outputQueue.isEmpty()) {
                 MSG nextMessage = null;
                 if (nextMessage == null) {
-                    nextMessage = encdec.decodeNextByte((byte) read);
+//                    nextMessage = encdec.decodeNextByte((byte) read);
                 }
                 if (nextMessage != null)
                     protocol.process(nextMessage);

@@ -13,15 +13,15 @@ import java.util.function.Supplier;
 public abstract class BaseServer<T> implements Server<T> {
 
     private final int port;
-    private final Supplier<ProtocolImpl> protocolFactory;
-    private final Supplier<EncoderDecoder> encdecFactory;
+    private final Supplier<BidiMessagingProtocol<T>> protocolFactory;
+    private final Supplier<MessageEncoderDecoder<T>> encdecFactory;
     private ServerSocket sock;
     private int clientID;
 
     public BaseServer(
             int port,
-            Supplier<ProtocolImpl> protocolFactory,
-            Supplier<EncoderDecoder> encdecFactory) {
+            Supplier<BidiMessagingProtocol<T>> protocolFactory,
+            Supplier<MessageEncoderDecoder<T>> encdecFactory) {
 
         this.port = port;
         this.protocolFactory = protocolFactory;
@@ -45,13 +45,13 @@ public abstract class BaseServer<T> implements Server<T> {
 
                 Socket clientSock = serverSock.accept();
 
-                ConnectionHandlerImpl<T> handler = new ConnectionHandlerImpl<T>(
+                BlockingConnectionHandler<T> handler = new BlockingConnectionHandler<T>(
                         clientSock,
                         encdecFactory.get(),
                         protocolFactory.get(),
                         connections,
                         clientID);
-                connections.addClient(clientID++,handler);
+                connections.addClient(clientID++, handler);
                 execute(handler);
             }
         } catch (IOException ex) {
@@ -66,6 +66,6 @@ public abstract class BaseServer<T> implements Server<T> {
 			sock.close();
     }
 
-    protected abstract void execute(ConnectionHandlerImpl<T>  handler);
+    protected abstract void execute(BlockingConnectionHandler<T>  handler);
 
 }

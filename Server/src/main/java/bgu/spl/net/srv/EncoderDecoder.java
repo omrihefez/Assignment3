@@ -5,7 +5,7 @@ import bgu.spl.net.api.MessageEncoderDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-public class EncoderDecoder implements MessageEncoderDecoder {
+public class EncoderDecoder<T> implements MessageEncoderDecoder<T> {
 
     private byte[] bytes = new byte[1 << 10];
     private int len = 0;

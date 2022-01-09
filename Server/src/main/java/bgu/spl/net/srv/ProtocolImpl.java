@@ -8,7 +8,7 @@ import bgu.spl.net.api.bidi.Connections;
 import java.util.LinkedList;
 //import java.util.Vector;
 
-public class ProtocolImpl implements BidiMessagingProtocol {
+public class ProtocolImpl<T> implements BidiMessagingProtocol<T> {
 
     private ConnectionsImpl connections;
     private int clientID;
